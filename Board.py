@@ -77,21 +77,41 @@ class Board:
         return False
     
     def isPawnMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
+
         return False
 
     def isRookMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
+
         return False
 
     def isKnightMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
         return False
 
     def isBishopMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
         return False
 
     def isQueenMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
         return False
 
     def isKingMoveValid(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
+
+        if(Math.abs(x2 - x1) <= 1 and Math.abs(y2 - y1) <= 1):
+            if(self.board[x2][y2] == None or not self.board[x2][y2].getPieceColor == self.board[x1][y1].getPieceColor):
+                return True 
+
+        return False
 
     def isMoveValid(self, startLoc, stopLoc):
         (x1, y1) = startLoc
@@ -102,6 +122,8 @@ class Board:
         
         if self.board[x1][y1] == None:
             return False
+        
+        return True
 
 
 

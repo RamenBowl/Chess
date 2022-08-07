@@ -28,3 +28,5 @@ class Piece:
         else:
             return "K"
 
+    def getPieceColor(self):
+        return self.color
