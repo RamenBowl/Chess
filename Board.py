@@ -1,3 +1,5 @@
+import math
+from tracemalloc import start
 from Piece import Piece
 
 #CONSTANTS
@@ -75,10 +77,35 @@ class Board:
         if 0 <= x and x <=7 and 0 <= y and y <= 7:
             return True
         return False
-    
+
+    def pieceBetween(self, startLoc, stopLoc):
+        (x1, y1) = startLoc
+        (x2, y2) = stopLoc
+
+        if(x1 == x2): #vertical move case
+            for i in range(y2 - y1):
+                if(not self.board[x1][i + y1] == None):
+                    return False
+
+        elif(y1 == y2): #horizontal move case
+            for i in range(x2 - x1):
+                if(not self.board[i + x1][y1] == None):
+                    return False
+        else: #diagonal move case
+            if(not math.abs(x2 - x1) == math.abs(y2-y1)):
+                return False
+
+            for i in range(x2 - x1):
+                for j in range(y2 - y1):
+                    if(not self.board[i + x1][j + y1] == None):
+                        return False
+        
+        return True
+
     def isPawnMoveValid(self, startLoc, stopLoc):
         (x1, y1) = startLoc
         (x2, y2) = stopLoc
+        
 
         return False
 
@@ -107,7 +134,7 @@ class Board:
         (x1, y1) = startLoc
         (x2, y2) = stopLoc
 
-        if(Math.abs(x2 - x1) <= 1 and Math.abs(y2 - y1) <= 1):
+        if(math.abs(x2 - x1) <= 1 and math.abs(y2 - y1) <= 1):
             if(self.board[x2][y2] == None or not self.board[x2][y2].getPieceColor == self.board[x1][y1].getPieceColor):
                 return True 
 
@@ -123,9 +150,8 @@ class Board:
         if self.board[x1][y1] == None:
             return False
         
+        
+
         return True
-
-
-
 
     
