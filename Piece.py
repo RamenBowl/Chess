@@ -1,32 +1,57 @@
-#CONSTANTS
-PAWN = 0
-ROOK = 1
-KNIGHT = 2
-BISHOP = 3
-QUEEN = 4
-KING = 5
-
-WHITE = 0
-BLACK = 1
+import math
+import os
 
 class Piece:
-    def __init__(self, rank, color):
+    def __init__(self, rank, color, value, texture=None, textureRect=None):
         self.rank = rank
         self.color = color
-
-    def getPieceRank(self):
-        if self.rank == PAWN:
-            return "P"
-        elif self.rank == ROOK:
-            return "R"
-        elif self.rank == KNIGHT:
-            return "k"
-        elif self.rank == BISHOP:
-            return "B"
-        elif self.rank == QUEEN:
-            return "Q"
+        
+        if color == 'white':
+            value_sign = 1
         else:
-            return "K"
+            value_sign = -1
+        self.value = value * value_sign
+       
+        self.moves = []
+        self.moved = False
 
-    def getPieceColor(self):
-        return self.color
+        self.texture = texture
+        self.set_texture()
+        self.textureRect = textureRect
+
+    def set_texture(self, size = 80):
+        self.texture = os.path.join(
+            f'assets/images/imgs-{size}px/{self.color}_{self.rank}.png'
+        )    
+
+    def add_moves(self, move):
+        self.moves.append(move)
+
+class Pawn(Piece):
+    def __init__(self, color):
+        if color == 'white':
+            self.dir = -1
+        else:
+            self.dir = 1
+        
+        super().__init__('pawn', color, 1.0)
+
+class Knight(Piece):
+    def __init__(self, color):
+        super().__init__('knight', color, 3.0)
+
+class Bishop(Piece):
+    def __init__(self, color):
+        super().__init__('bishop', color, 3.001)
+
+class Rook(Piece):
+    def __init__(self, color):
+        super().__init__('rook', color, 5.0)
+
+class Queen(Piece):
+    def __init__(self, color):
+        super().__init__('queen', color, 9.0)
+
+class King(Piece):
+    def __init__(self, color):
+        super().__init__('king', color, math.inf)
